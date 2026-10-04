@@ -45,13 +45,17 @@
 					<div class="card-panel">
 						<div class="table-responsive">
 							<table class="table table-dark-custom table-hover">
-								<thead><tr><th>ID</th><th>Nombre</th><c:if test="${tipo == 'CATEGORIAS'}"><th>Descripción</th></c:if><th class="text-end">Acciones</th></tr></thead>
+								<thead><tr><th>ID</th><th>Nombre</th><c:if test="${tipo == 'CATEGORIAS'}"><th>Descripción</th></c:if><th class="text-center" title="Cantidad de ${tipo.unidadUso} que usan cada registro">En uso</th><th class="text-end">Acciones</th></tr></thead>
 								<tbody>
 									<c:forEach var="r" items="${registros}">
+										<c:set var="enUso" value="${empty usos[r.id] ? 0 : usos[r.id]}" />
 										<tr>
 											<td>${r.id}</td>
 											<td class="fw-semibold"><c:out value="${r.nombre}" /></td>
 											<c:if test="${tipo == 'CATEGORIAS'}"><td class="text-muted-2"><c:out value="${r.descripcion}" /></td></c:if>
+											<td class="text-center">
+												<span class="badge ${enUso > 0 ? 'bg-info text-dark' : 'bg-secondary'}" title="${enUso} ${tipo.unidadUso}">${enUso}</span>
+											</td>
 											<td class="text-end text-nowrap">
 												<button type="button" class="btn btn-sm btn-outline-light btn-editar"
 													data-id="${r.id}" data-nombre="<c:out value='${r.nombre}' />"
@@ -66,7 +70,7 @@
 											</td>
 										</tr>
 									</c:forEach>
-									<c:if test="${empty registros}"><tr><td colspan="4" class="text-center text-muted-2 py-4">Sin registros.</td></tr></c:if>
+									<c:if test="${empty registros}"><tr><td colspan="5" class="text-center text-muted-2 py-4">Sin registros.</td></tr></c:if>
 								</tbody>
 							</table>
 						</div>

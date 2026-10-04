@@ -1,6 +1,7 @@
 package com.urbanstyle.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.urbanstyle.dao.impl.CatalogoDAOImpl;
 import com.urbanstyle.entity.Categoria;
@@ -15,14 +16,22 @@ import com.urbanstyle.util.Texto;
 public class CatalogoService {
 
     public enum Tipo {
-        CATEGORIAS("Categorías", 50), MARCAS("Marcas", 50), COLORES("Colores", 30), TALLAS("Tallas", 10);
+        CATEGORIAS("Categorías", 50, "productos"), MARCAS("Marcas", 50, "productos"),
+        COLORES("Colores", 30, "variantes"), TALLAS("Tallas", 10, "variantes");
 
         private final String titulo;
         private final int largoMaximo;
+        /** Que se cuenta en la columna "En uso": productos o variantes. */
+        private final String unidadUso;
 
-        Tipo(String titulo, int largoMaximo) {
+        Tipo(String titulo, int largoMaximo, String unidadUso) {
             this.titulo = titulo;
             this.largoMaximo = largoMaximo;
+            this.unidadUso = unidadUso;
+        }
+
+        public String getUnidadUso() {
+            return unidadUso;
         }
 
         public String getTitulo() {
@@ -77,6 +86,16 @@ public class CatalogoService {
             case MARCAS -> marcas();
             case COLORES -> colores();
             case TALLAS -> tallas();
+        };
+    }
+
+    /** id del registro -> cantidad de productos/variantes que lo usan (sin entrada = 0). */
+    public Map<Integer, Long> usoPorRegistro(Tipo tipo) {
+        return switch (tipo) {
+            case CATEGORIAS -> categorias.contarUsoPorRegistro();
+            case MARCAS -> marcas.contarUsoPorRegistro();
+            case COLORES -> colores.contarUsoPorRegistro();
+            case TALLAS -> tallas.contarUsoPorRegistro();
         };
     }
 

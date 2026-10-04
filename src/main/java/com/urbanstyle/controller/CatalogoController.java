@@ -26,6 +26,7 @@ public class CatalogoController extends BaseServlet {
         req.setAttribute("tipo", tipo);
         req.setAttribute("tipos", Tipo.values());
         req.setAttribute("registros", catalogoService.listar(tipo));
+        req.setAttribute("usos", catalogoService.usoPorRegistro(tipo));
         vista(req, res, "catalogos", "Catálogos", "catalogos");
     }
 

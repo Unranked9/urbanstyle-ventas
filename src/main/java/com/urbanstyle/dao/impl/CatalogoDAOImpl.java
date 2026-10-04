@@ -1,6 +1,8 @@
 package com.urbanstyle.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.urbanstyle.config.JPAUtil;
@@ -22,31 +24,39 @@ public class CatalogoDAOImpl<T> implements CatalogoDAO<T> {
     private final String entidad;
     /** JPQL que cuenta cuántos registros usan el elemento (:id). */
     private final String jpqlUso;
+    /** JPQL que devuelve pares (id del registro, cantidad que lo usa) en una sola consulta. */
+    private final String jpqlUsoAgrupado;
 
-    private CatalogoDAOImpl(Class<T> tipo, String jpqlUso) {
+    private CatalogoDAOImpl(Class<T> tipo, String jpqlUso, String jpqlUsoAgrupado) {
         this.tipo = tipo;
         this.entidad = tipo.getSimpleName();
         this.jpqlUso = jpqlUso;
+        this.jpqlUsoAgrupado = jpqlUsoAgrupado;
     }
 
     public static CatalogoDAOImpl<Categoria> categorias() {
         return new CatalogoDAOImpl<>(Categoria.class,
-                "SELECT COUNT(p) FROM Producto p WHERE p.categoria.id = :id");
+                "SELECT COUNT(p) FROM Producto p WHERE p.categoria.id = :id",
+                "SELECT p.categoria.id, COUNT(p) FROM Producto p GROUP BY p.categoria.id");
     }
 
     public static CatalogoDAOImpl<Marca> marcas() {
         return new CatalogoDAOImpl<>(Marca.class,
-                "SELECT COUNT(p) FROM Producto p WHERE p.marca.id = :id");
+                "SELECT COUNT(p) FROM Producto p WHERE p.marca.id = :id",
+                "SELECT p.marca.id, COUNT(p) FROM Producto p"
+                        + " WHERE p.marca IS NOT NULL GROUP BY p.marca.id");
     }
 
     public static CatalogoDAOImpl<Color> colores() {
         return new CatalogoDAOImpl<>(Color.class,
-                "SELECT COUNT(v) FROM ProductoVariante v WHERE v.color.id = :id");
+                "SELECT COUNT(v) FROM ProductoVariante v WHERE v.color.id = :id",
+                "SELECT v.color.id, COUNT(v) FROM ProductoVariante v GROUP BY v.color.id");
     }
 
     public static CatalogoDAOImpl<Talla> tallas() {
         return new CatalogoDAOImpl<>(Talla.class,
-                "SELECT COUNT(v) FROM ProductoVariante v WHERE v.talla.id = :id");
+                "SELECT COUNT(v) FROM ProductoVariante v WHERE v.talla.id = :id",
+                "SELECT v.talla.id, COUNT(v) FROM ProductoVariante v GROUP BY v.talla.id");
     }
 
     @Override
@@ -96,5 +106,17 @@ public class CatalogoDAOImpl<T> implements CatalogoDAO<T> {
                 .createQuery(jpqlUso, Long.class)
                 .setParameter("id", id)
                 .getSingleResult() > 0);
+    }
+
+    @Override
+    public Map<Integer, Long> contarUsoPorRegistro() {
+        return JPAUtil.consultar(em -> {
+            Map<Integer, Long> usos = new HashMap<>();
+            // Cada fila es un arreglo: fila[0] = id del registro, fila[1] = cantidad.
+            for (Object[] fila : em.createQuery(jpqlUsoAgrupado, Object[].class).getResultList()) {
+                usos.put((Integer) fila[0], (Long) fila[1]);
+            }
+            return usos;
+        });
     }
 }
