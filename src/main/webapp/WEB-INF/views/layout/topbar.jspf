@@ -1,0 +1,13 @@
+<div class="topbar">
+	<div class="d-flex align-items-center gap-3">
+		<button class="btn btn-sm d-md-none" style="color: var(--text)" onclick="toggleSidebar()" aria-label="Menú">
+			<i class="bi bi-list fs-5"></i>
+		</button>
+		<h5 class="mb-0 fw-bold"><c:out value="${tituloPagina}" /></h5>
+	</div>
+	<div class="d-flex align-items-center gap-3">
+		<small id="relojTopbar" class="d-none d-sm-inline text-muted-2" style="font-size: 0.8rem"></small>
+		<a href="${ctx}/perfil" class="avatar-circle text-decoration-none" style="width: 32px; height: 32px; font-size: 0.75rem"
+			title="<c:out value='${us.nombreCompleto}' />"><c:out value="${us.iniciales}" /></a>
+	</div>
+</div>

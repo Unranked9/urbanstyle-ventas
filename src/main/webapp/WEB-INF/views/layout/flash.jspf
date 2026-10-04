@@ -1,0 +1,12 @@
+<c:if test="${not empty flashOk}">
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		<i class="bi bi-check-circle me-1"></i> <c:out value="${flashOk}" />
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+	</div>
+</c:if>
+<c:if test="${not empty flashError}">
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		<i class="bi bi-exclamation-triangle me-1"></i> <c:out value="${flashError}" />
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+	</div>
+</c:if>
