@@ -1,0 +1,27 @@
+# --- Maven ---
+target/
+
+# --- Eclipse ---
+.classpath
+.project
+.settings/
+bin/
+build/
+
+# --- IntelliJ / NetBeans / VS Code ---
+.idea/
+*.iml
+nbproject/
+nbactions.xml
+.vscode/
+
+# --- Credenciales locales (NO subir a GitHub) ---
+src/main/resources/db.properties
+
+# --- Imágenes subidas por los usuarios ---
+uploads/
+
+# --- Sistema operativo ---
+.DS_Store
+Thumbs.db
+*.log

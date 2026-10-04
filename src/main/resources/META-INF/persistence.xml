@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+    <!--
+        Unidad de persistencia de UrbanStyle.
+        Tomcat no es un servidor Jakarta EE completo, por eso las
+        transacciones son RESOURCE_LOCAL (las maneja la propia aplicación).
+    -->
+    <persistence-unit name="UrbanStylePU" transaction-type="RESOURCE_LOCAL">
+
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Entidades mapeadas a DB_UrbanStyle -->
+        <class>com.urbanstyle.entity.Rol</class>
+        <class>com.urbanstyle.entity.Categoria</class>
+        <class>com.urbanstyle.entity.Marca</class>
+        <class>com.urbanstyle.entity.Color</class>
+        <class>com.urbanstyle.entity.Talla</class>
+        <class>com.urbanstyle.entity.Usuario</class>
+        <class>com.urbanstyle.entity.Cliente</class>
+        <class>com.urbanstyle.entity.Producto</class>
+        <class>com.urbanstyle.entity.ProductoVariante</class>
+        <class>com.urbanstyle.entity.Venta</class>
+        <class>com.urbanstyle.entity.DetalleVenta</class>
+        <class>com.urbanstyle.entity.ComprobantePago</class>
+        <class>com.urbanstyle.entity.EstadoVentaConverter</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+            <!--
+                URL, usuario y contraseña NO se escriben aquí:
+                JPAUtil los lee de db.properties (archivo ignorado por Git)
+                o de variables de entorno. Ver db.properties.example.
+            -->
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+
+            <!-- La BD ya existe (sql/01_DB_UrbanStyle.sql): Hibernate no la modifica -->
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
+
+            <!-- Poner en true para ver el SQL que genera Hibernate en la consola -->
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

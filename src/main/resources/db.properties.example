@@ -1,0 +1,12 @@
+# ============================================================
+#  Copia este archivo como "db.properties" (misma carpeta) y
+#  coloca tus credenciales locales. db.properties está en
+#  .gitignore: nunca se sube a GitHub.
+#
+#  También se pueden usar variables de entorno, que tienen
+#  prioridad: URBANSTYLE_DB_URL, URBANSTYLE_DB_USER,
+#  URBANSTYLE_DB_PASSWORD
+# ============================================================
+db.url=jdbc:mysql://127.0.0.1:3306/DB_UrbanStyle?serverTimezone=America/Lima&useUnicode=true&characterEncoding=UTF-8
+db.user=root
+db.password=
