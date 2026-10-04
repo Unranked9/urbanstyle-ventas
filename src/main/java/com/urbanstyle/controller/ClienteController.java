@@ -26,9 +26,13 @@ public class ClienteController extends BaseServlet {
         String estado = req.getParameter("estado");
         Boolean activo = "inactivos".equals(estado) ? Boolean.FALSE
                 : "todos".equals(estado) ? null : Boolean.TRUE;
-        req.setAttribute("clientes", clienteService.listar(texto, activo));
+        String tipo = req.getParameter("tipo");
+        Boolean mayorista = "mayoristas".equals(tipo) ? Boolean.TRUE
+                : "minoristas".equals(tipo) ? Boolean.FALSE : null;
+        req.setAttribute("clientes", clienteService.listar(texto, activo, mayorista));
         req.setAttribute("fq", texto);
         req.setAttribute("fEstado", estado == null ? "activos" : estado);
+        req.setAttribute("fTipo", tipo == null ? "todos" : tipo);
         vista(req, res, "clientes", "Clientes", "clientes");
     }
 

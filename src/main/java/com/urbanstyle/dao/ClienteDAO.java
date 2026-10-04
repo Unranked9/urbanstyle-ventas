@@ -7,7 +7,7 @@ import com.urbanstyle.entity.Cliente;
 
 public interface ClienteDAO {
 
-    List<Cliente> listar(String texto, Boolean activo);
+    List<Cliente> listar(String texto, Boolean activo, Boolean mayorista);
 
     /** Búsqueda rápida para la pantalla de venta (por nombre, DNI o email). */
     List<Cliente> buscarActivos(String texto, int limite);

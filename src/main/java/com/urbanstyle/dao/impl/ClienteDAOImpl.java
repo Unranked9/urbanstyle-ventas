@@ -17,13 +17,16 @@ public class ClienteDAOImpl implements ClienteDAO {
             + " OR c.dni LIKE :texto OR LOWER(c.email) LIKE :texto OR c.telefono LIKE :texto)";
 
     @Override
-    public List<Cliente> listar(String texto, Boolean activo) {
+    public List<Cliente> listar(String texto, Boolean activo, Boolean mayorista) {
         StringBuilder jpql = new StringBuilder("SELECT c FROM Cliente c WHERE 1 = 1");
         if (texto != null) {
             jpql.append(" AND ").append(CONDICION_TEXTO);
         }
         if (activo != null) {
             jpql.append(" AND c.activo = :activo");
+        }
+        if (mayorista != null) {
+            jpql.append(" AND c.mayorista = :mayorista");
         }
         jpql.append(" ORDER BY c.activo DESC, c.nombres, c.apellidos");
 
@@ -34,6 +37,9 @@ public class ClienteDAOImpl implements ClienteDAO {
             }
             if (activo != null) {
                 q.setParameter("activo", activo);
+            }
+            if (mayorista != null) {
+                q.setParameter("mayorista", mayorista);
             }
             return q.getResultList();
         });

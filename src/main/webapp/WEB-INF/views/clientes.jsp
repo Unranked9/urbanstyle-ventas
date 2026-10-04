@@ -13,11 +13,11 @@
 
 			<form class="card-panel p-3 mb-3" method="get" action="${ctx}/clientes">
 				<div class="row g-2 align-items-end">
-					<div class="col-md-6">
+					<div class="col-md-4">
 						<label class="form-label">Buscar</label>
 						<input class="form-control form-control-dark" name="q" value="<c:out value='${fq}' />" placeholder="Nombre, DNI, correo o teléfono">
 					</div>
-					<div class="col-6 col-md-3">
+					<div class="col-6 col-md-2">
 						<label class="form-label">Estado</label>
 						<select class="form-select form-select-dark" name="estado">
 							<option value="activos" ${fEstado == 'activos' ? 'selected' : ''}>Activos</option>
@@ -25,7 +25,15 @@
 							<option value="todos" ${fEstado == 'todos' ? 'selected' : ''}>Todos</option>
 						</select>
 					</div>
-					<div class="col-6 col-md-3 d-flex gap-2">
+					<div class="col-6 col-md-2">
+						<label class="form-label">Tipo</label>
+						<select class="form-select form-select-dark" name="tipo">
+							<option value="todos" ${fTipo == 'todos' ? 'selected' : ''}>Todos</option>
+							<option value="mayoristas" ${fTipo == 'mayoristas' ? 'selected' : ''}>Mayoristas</option>
+							<option value="minoristas" ${fTipo == 'minoristas' ? 'selected' : ''}>Minoristas</option>
+						</select>
+					</div>
+					<div class="col-12 col-md-4 d-flex gap-2">
 						<button class="btn btn-outline-light flex-fill"><i class="bi bi-funnel"></i> Filtrar</button>
 						<button type="button" class="btn btn-accent flex-fill" data-bs-toggle="modal" data-bs-target="#modalCliente" data-modo="nuevo"><i class="bi bi-person-plus"></i> Nuevo</button>
 					</div>

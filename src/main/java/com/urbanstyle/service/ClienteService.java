@@ -21,8 +21,8 @@ public class ClienteService {
         this.clienteDAO = clienteDAO;
     }
 
-    public List<Cliente> listar(String texto, Boolean activo) {
-        return clienteDAO.listar(Texto.limpiar(texto), activo);
+    public List<Cliente> listar(String texto, Boolean activo, Boolean mayorista) {
+        return clienteDAO.listar(Texto.limpiar(texto), activo, mayorista);
     }
 
     public List<Cliente> buscarParaVenta(String texto) {
