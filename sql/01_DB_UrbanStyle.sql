@@ -205,4 +205,7 @@ INSERT INTO product_variants (product_id, color_id, size_id, stock) VALUES
 
 
 
+DROP DATABASE IF EXISTS DB_UrbanStyle;
 
+CREATE DATABASE DB_UrbanStyle;
+USE DB_UrbanStyle;
