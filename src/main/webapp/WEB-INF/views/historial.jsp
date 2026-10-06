@@ -42,6 +42,15 @@
 					</div>
 					<div class="col-6 col-md-2"><label class="form-label">Buscar</label><input class="form-control form-control-dark" name="q" value="<c:out value='${filtro.texto}' />" placeholder="Cliente, DNI, N°"></div>
 					<div class="col-12 d-flex justify-content-end gap-2">
+						<c:url var="urlCsv" value="/historial/csv">
+							<c:param name="desde" value="${filtro.desde}" />
+							<c:param name="hasta" value="${filtro.hasta}" />
+							<c:param name="estado" value="${fEstado}" />
+							<c:param name="tipo" value="${fTipo}" />
+							<c:param name="vendedor" value="${filtro.usuarioId}" />
+							<c:param name="q" value="${filtro.texto}" />
+						</c:url>
+						<a class="btn btn-outline-light" href="${urlCsv}"><i class="bi bi-filetype-csv me-1"></i> Exportar CSV</a>
 						<a class="btn btn-outline-light" href="${ctx}/historial">Limpiar</a>
 						<button class="btn btn-accent"><i class="bi bi-funnel me-1"></i> Filtrar</button>
 					</div>
