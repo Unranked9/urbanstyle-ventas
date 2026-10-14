@@ -52,8 +52,7 @@ public class ClienteController extends BaseServlet {
                 Cliente c = clienteService.guardar(id,
                         req.getParameter("nombres"), req.getParameter("apellidos"),
                         req.getParameter("dni"), req.getParameter("telefono"),
-                        req.getParameter("email"), req.getParameter("username"),
-                        req.getParameter("password"), req.getParameter("mayorista") != null);
+                        req.getParameter("email"), req.getParameter("mayorista") != null);
                 ok(req, "Cliente " + c.getNombreCompleto() + (id == null ? " registrado." : " actualizado."));
             }
         } catch (ServiceException e) {

@@ -47,6 +47,16 @@
 			</a>
 		</c:if>
 
+		<c:if test="${us.gestor}">
+			<div class="nav-section">Reportes</div>
+			<a href="${ctx}/reportes/clientes" class="nav-link ${paginaActual == 'reporteClientes' ? 'active' : ''}">
+				<i class="bi bi-file-earmark-person"></i> Reporte de clientes
+			</a>
+			<a href="${ctx}/reportes/ventas" class="nav-link ${paginaActual == 'reporteVentas' ? 'active' : ''}">
+				<i class="bi bi-file-earmark-bar-graph"></i> Reporte de ventas
+			</a>
+		</c:if>
+
 		<div class="nav-section">Cuenta</div>
 		<c:if test="${us.admin}">
 			<a href="${ctx}/usuarios" class="nav-link ${paginaActual == 'usuarios' ? 'active' : ''}">

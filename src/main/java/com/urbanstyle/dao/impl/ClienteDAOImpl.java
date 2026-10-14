@@ -81,10 +81,6 @@ public class ClienteDAOImpl implements ClienteDAO {
         return existe("c.dni = :valor", dni, excluirId);
     }
 
-    @Override
-    public boolean existeUsername(String username, Integer excluirId) {
-        return existe("LOWER(c.username) = LOWER(:valor)", username, excluirId);
-    }
 
     private boolean existe(String condicion, String valor, Integer excluirId) {
         return JPAUtil.consultar(em -> em

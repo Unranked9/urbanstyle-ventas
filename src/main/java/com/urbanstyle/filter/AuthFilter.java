@@ -18,35 +18,28 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-/**
- * Filtro único de seguridad (con anotaciones el orden entre varios
- * filtros no está garantizado, por eso autenticación y permisos van juntos).
- *
- * 1. Rutas públicas: /login y recursos estáticos.
- * 2. Resto: requiere sesión iniciada.
- * 3. Algunas rutas exigen un rol específico.
- */
+
 @WebFilter("/*")
 public class AuthFilter implements Filter {
 
-    /** Cada cuánto se verifica en BD que el usuario siga activo. */
     private static final long REVALIDAR_MS = 60_000;
     private static final String ULTIMA_VALIDACION = "ultimaValidacion";
 
     private static final String[] SOLO_ADMIN = {Rol.ADMIN};
     private static final String[] GESTORES = {Rol.ADMIN, Rol.SUB_ADMIN};
 
-    /** Ruta (o prefijo terminado en /) -> roles permitidos. */
-    private static final Map<String, String[]> PERMISOS = Map.of(
-            "/usuarios", SOLO_ADMIN,
-            "/usuarios/", SOLO_ADMIN,
-            "/catalogos", GESTORES,
-            "/catalogos/", GESTORES,
-            "/productos/nuevo", GESTORES,
-            "/productos/editar", GESTORES,
-            "/productos/guardar", GESTORES,
-            "/productos/estado", GESTORES,
-            "/ventas/anular", GESTORES);
+    private static final Map<String, String[]> PERMISOS = Map.ofEntries(
+            Map.entry("/usuarios", SOLO_ADMIN),
+            Map.entry("/usuarios/", SOLO_ADMIN),
+            Map.entry("/catalogos", GESTORES),
+            Map.entry("/catalogos/", GESTORES),
+            Map.entry("/productos/nuevo", GESTORES),
+            Map.entry("/productos/editar", GESTORES),
+            Map.entry("/productos/guardar", GESTORES),
+            Map.entry("/productos/estado", GESTORES),
+            Map.entry("/ventas/anular", GESTORES),
+            Map.entry("/reportes", GESTORES),
+            Map.entry("/reportes/", GESTORES));
 
     private final AuthService authService = new AuthService();
 
@@ -57,7 +50,8 @@ public class AuthFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         req.setCharacterEncoding("UTF-8");
 
-        String ruta = req.getRequestURI().substring(req.getContextPath().length());
+        
+        String ruta = req.getServletPath() + (req.getPathInfo() == null ? "" : req.getPathInfo());
         if (esPublica(ruta)) {
             chain.doFilter(request, response);
             return;
@@ -91,7 +85,7 @@ public class AuthFilter implements Filter {
             return;
         }
 
-        // Las páginas con datos no deben quedar en la caché del navegador (botón "atrás" tras logout).
+        // Las páginas con datos no deben quedar en la caché del navegador.
         if (!ruta.startsWith("/uploads/")) {
             res.setHeader("Cache-Control", "no-store");
         }

@@ -1,0 +1,12 @@
+<div class="reporte-encabezado">
+	<div>
+		<div class="reporte-empresa">URBANSTYLE PERÚ S.A.C.</div>
+		<div class="reporte-empresa-sub">Av. Agustín Gamarra 1275, La Victoria, Lima</div>
+	</div>
+	<div>
+		<div class="reporte-titulo"><c:out value="${tituloPagina}" /></div>
+		<div class="reporte-meta">Emitido: <c:out value="${fechaEmision}" /></div>
+		<div class="reporte-meta">Generado por: <c:out value="${us.nombreCompleto}" /></div>
+	</div>
+</div>
+<div class="reporte-filtros"><strong>Filtros:</strong> <c:out value="${filtrosTexto}" /></div>

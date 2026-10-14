@@ -20,6 +20,5 @@ public interface ClienteDAO {
 
     boolean existeDni(String dni, Integer excluirId);
 
-    boolean existeUsername(String username, Integer excluirId);
 
 }

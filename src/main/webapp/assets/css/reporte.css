@@ -1,0 +1,67 @@
+/* =========================================================
+   Reportes imprimibles (reporte de clientes y de ventas)
+   En pantalla: hoja blanca dentro del panel.
+   Al imprimir: solo la hoja (sin menú, barra superior ni filtros).
+   ========================================================= */
+.hoja-reporte {
+	background: #fff;
+	color: #111;
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 28px 32px;
+	border-radius: 6px;
+	box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+	font-size: 0.85rem;
+}
+
+.reporte-encabezado {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	border-bottom: 2px solid #e94560;
+	padding-bottom: 10px;
+	margin-bottom: 14px;
+}
+.reporte-empresa { font-size: 1.25rem; font-weight: 700; letter-spacing: 1px; color: #e94560; }
+.reporte-empresa-sub { font-size: 0.75rem; color: #555; }
+.reporte-titulo { font-size: 1.1rem; font-weight: 700; text-align: right; }
+.reporte-meta { font-size: 0.75rem; color: #444; text-align: right; }
+.reporte-filtros { font-size: 0.78rem; color: #333; background: #f3f4f6; padding: 6px 10px; border-radius: 4px; margin-bottom: 12px; }
+
+.tabla-reporte { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.tabla-reporte th {
+	background: #1a1a2e; color: #fff; font-weight: 600;
+	padding: 6px 8px; text-align: left; white-space: nowrap;
+}
+.tabla-reporte td { padding: 5px 8px; border-bottom: 1px solid #ddd; vertical-align: top; }
+.tabla-reporte tbody tr:nth-child(even) td { background: #fafafa; }
+.tabla-reporte .num { text-align: right; white-space: nowrap; }
+.tabla-reporte .centro { text-align: center; }
+.tabla-reporte tfoot td { font-weight: 700; border-top: 2px solid #1a1a2e; border-bottom: none; background: #f3f4f6; }
+.tabla-reporte .anulada td { color: #999; text-decoration: line-through; }
+.tabla-reporte .anulada td.estado { text-decoration: none; color: #c00; font-weight: 600; }
+
+.reporte-resumen { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; }
+.reporte-resumen .bloque { flex: 1 1 260px; border: 1px solid #ddd; border-radius: 4px; padding: 10px 12px; }
+.reporte-resumen .bloque h6 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin: 0 0 6px; color: #1a1a2e; }
+.reporte-resumen table { width: 100%; font-size: 0.8rem; }
+.reporte-resumen td { padding: 2px 0; }
+.reporte-resumen td.num { text-align: right; }
+.reporte-resumen tr.total td { font-weight: 700; border-top: 1px solid #999; padding-top: 4px; }
+
+.reporte-vacio { text-align: center; color: #777; padding: 30px 0; }
+.reporte-aviso { color: #9a6700; background: #fff8c5; border: 1px solid #e6d27a; padding: 6px 10px; border-radius: 4px; margin-bottom: 10px; font-size: 0.8rem; }
+.reporte-pie { margin-top: 18px; font-size: 0.7rem; color: #777; text-align: center; }
+
+@media print {
+	@page { size: A4 landscape; margin: 12mm; }
+	body { background: #fff !important; color: #111; }
+	.sidebar, .topbar, .no-print, .alert { display: none !important; }
+	.main-content { margin-left: 0 !important; }
+	.page-body { padding: 0 !important; }
+	.hoja-reporte { box-shadow: none; max-width: none; padding: 0; border-radius: 0; }
+	.tabla-reporte thead { display: table-header-group; }  /* repite el encabezado en cada página */
+	.tabla-reporte tr { page-break-inside: avoid; }
+	.tabla-reporte th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+	.reporte-resumen { page-break-inside: avoid; }
+}
