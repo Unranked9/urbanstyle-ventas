@@ -51,8 +51,6 @@ last_name varchar(60) not null,
 dni char(8) null unique,
 phone varchar(15) null,
 email varchar(50) not null unique,
-username varchar(50) not null unique,
-password varchar(100) not null,
 -- is_wholesale significa " Es cliente mayorista" y esta por defecto en No
 is_wholesaler boolean not null default false,
 active boolean not null default true, 
@@ -166,9 +164,9 @@ INSERT INTO users (role_id, first_name, last_name, dni, phone, username, passwor
 
 
 -- 6. clientes
-INSERT INTO clientes (first_name, last_name, dni, phone, email, username, password, is_wholesaler) VALUES
-('Carlos', 'Ramirez', '70456789', '987654324', 'carlos@example.com', 'cramirez', '$2a$10$examplehash4examplehash4examplehash4examplehash4exa', FALSE),
-('Lucía',  'Torres',  NULL,       '987654325', 'lucia@example.com',  'ltorres',  '$2a$10$examplehash5examplehash5examplehash5examplehash5exa', TRUE);
+INSERT INTO clientes (first_name, last_name, dni, phone, email, is_wholesaler) VALUES
+('Carlos', 'Ramirez', '70456789', '987654324', 'carlos@example.com', FALSE),
+('Lucía',  'Torres',  NULL,       '987654325', 'lucia@example.com',  TRUE);
 
 -- 7. brands
 INSERT INTO brands (name) VALUES

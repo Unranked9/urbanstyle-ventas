@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Coordenadas del proyecto (Tema 2: Maven) -->
+    <!-- Coordenadas del proyecto (Maven) -->
     <groupId>com.urbanstyle</groupId>
     <artifactId>urbanstyle-ventas</artifactId>
     <version>2.0.0</version>

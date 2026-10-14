@@ -43,14 +43,13 @@
 			<div class="card-panel">
 				<div class="table-responsive">
 					<table class="table table-dark-custom table-hover">
-						<thead><tr><th>Cliente</th><th>DNI</th><th>Contacto</th><th>Usuario</th><th>Tipo</th><th>Registro</th><th>Estado</th><th class="text-end">Acciones</th></tr></thead>
+						<thead><tr><th>Cliente</th><th>DNI</th><th>Contacto</th><th>Tipo</th><th>Registro</th><th>Estado</th><th class="text-end">Acciones</th></tr></thead>
 						<tbody>
 							<c:forEach var="c" items="${clientes}">
 								<tr class="${c.activo ? '' : 'fila-inactiva'}">
 									<td class="fw-semibold"><c:out value="${c.nombreCompleto}" /></td>
 									<td><c:out value="${empty c.dni ? '—' : c.dni}" /></td>
 									<td><div><c:out value="${c.email}" /></div><small class="text-muted-2"><c:out value="${c.telefono}" /></small></td>
-									<td class="text-muted-2"><c:out value="${c.username}" /></td>
 									<td><span class="badge ${c.mayorista ? 'bg-info text-dark' : 'bg-secondary'}">${c.mayorista ? 'Mayorista' : 'Minorista'}</span></td>
 									<td class="text-nowrap">${c.fechaRegistroTexto}</td>
 									<td><span class="badge ${c.activo ? 'badge-stock-ok' : 'bg-secondary'}">${c.activo ? 'Activo' : 'Inactivo'}</span></td>
@@ -58,7 +57,7 @@
 										<button type="button" class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalCliente" data-modo="editar"
 											data-id="${c.id}" data-nombres="<c:out value='${c.nombres}' />" data-apellidos="<c:out value='${c.apellidos}' />"
 											data-dni="<c:out value='${c.dni}' />" data-telefono="<c:out value='${c.telefono}' />"
-											data-email="<c:out value='${c.email}' />" data-username="<c:out value='${c.username}' />"
+											data-email="<c:out value='${c.email}' />"
 											data-mayorista="${c.mayorista}"><i class="bi bi-pencil"></i></button>
 										<form class="d-inline" method="post" action="${ctx}/clientes/estado"
 											data-confirmar="${c.activo ? 'El cliente no aparecerá en la búsqueda de la caja.' : '¿Activar nuevamente a este cliente?'}">
@@ -69,7 +68,7 @@
 									</td>
 								</tr>
 							</c:forEach>
-							<c:if test="${empty clientes}"><tr><td colspan="8" class="text-center text-muted-2 py-5">No se encontraron clientes.</td></tr></c:if>
+							<c:if test="${empty clientes}"><tr><td colspan="7" class="text-center text-muted-2 py-5">No se encontraron clientes.</td></tr></c:if>
 						</tbody>
 					</table>
 				</div>
@@ -93,8 +92,6 @@
 					<div class="col-6"><label class="form-label">DNI</label><input class="form-control form-control-dark" name="dni" id="cliDni" maxlength="8" pattern="\d{8}" inputmode="numeric"></div>
 					<div class="col-6"><label class="form-label">Teléfono</label><input class="form-control form-control-dark" name="telefono" id="cliTelefono" maxlength="15"></div>
 					<div class="col-12"><label class="form-label">Correo *</label><input type="email" class="form-control form-control-dark" name="email" id="cliEmail" maxlength="50" required></div>
-					<div class="col-6"><label class="form-label">Usuario (tienda web)</label><input class="form-control form-control-dark" name="username" id="cliUsername" maxlength="50" placeholder="Se genera del correo"></div>
-					<div class="col-6"><label class="form-label">Contraseña</label><input type="password" class="form-control form-control-dark" name="password" id="cliPassword" maxlength="72" placeholder="Opcional"></div>
 					<div class="col-12">
 						<div class="form-check form-switch mt-1">
 							<input class="form-check-input" type="checkbox" name="mayorista" id="cliMayorista">
@@ -102,7 +99,6 @@
 						</div>
 					</div>
 				</div>
-				<small class="text-muted-2 d-block mt-2">La BD exige usuario y contraseña para cada cliente. Si se dejan vacíos se generan automáticamente.</small>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
@@ -124,9 +120,6 @@
 		document.getElementById('cliDni').value = d.dni || '';
 		document.getElementById('cliTelefono').value = d.telefono || '';
 		document.getElementById('cliEmail').value = d.email || '';
-		document.getElementById('cliUsername').value = d.username || '';
-		document.getElementById('cliPassword').value = '';
-		document.getElementById('cliPassword').placeholder = editar ? 'Dejar vacío para no cambiar' : 'Opcional';
 		document.getElementById('cliMayorista').checked = d.mayorista === 'true';
 	});
 </script>

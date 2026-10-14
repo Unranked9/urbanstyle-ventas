@@ -13,11 +13,8 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 /**
- * Tabla clientes.
- *
- * La BD exige email, username y password para todo cliente (pensado para
- * una futura tienda en línea). Cuando el cliente se registra desde caja,
- * ClienteService genera el username y una contraseña aleatoria.
+ * Tabla clientes. Los clientes no inician sesión en el sistema:
+ * solo se registran para asociarlos a sus ventas y comprobantes.
  */
 @Entity
 @Table(name = "clientes")
@@ -41,12 +38,6 @@ public class Cliente {
 
     @Column(name = "email", nullable = false, unique = true, length = 50)
     private String email;
-
-    @Column(name = "username", nullable = false, unique = true, length = 50)
-    private String username;
-
-    @Column(name = "password", nullable = false, length = 100)
-    private String password;
 
     /** is_wholesaler: cliente mayorista. */
     @Column(name = "is_wholesaler", nullable = false)
@@ -123,22 +114,6 @@ public class Cliente {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public boolean isMayorista() {

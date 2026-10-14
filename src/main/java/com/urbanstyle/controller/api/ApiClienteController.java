@@ -16,10 +16,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/**
- *   GET  /api/clientes/buscar?q=     búsqueda rápida en caja
- *   POST /api/clientes/guardar       registro rápido desde caja (form-urlencoded)
- */
+
 @WebServlet({"/api/clientes/buscar", "/api/clientes/guardar"})
 public class ApiClienteController extends HttpServlet {
 
@@ -42,7 +39,7 @@ public class ApiClienteController extends HttpServlet {
             Cliente c = clienteService.guardar(null,
                     req.getParameter("nombres"), req.getParameter("apellidos"),
                     req.getParameter("dni"), req.getParameter("telefono"),
-                    req.getParameter("email"), null, null,
+                    req.getParameter("email"),
                     req.getParameter("mayorista") != null);
             Map<String, Object> cuerpo = new LinkedHashMap<>();
             cuerpo.put("ok", true);
