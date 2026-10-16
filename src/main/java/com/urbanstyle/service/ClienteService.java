@@ -20,8 +20,8 @@ public class ClienteService {
         this.clienteDAO = clienteDAO;
     }
 
-    public List<Cliente> listar(String texto, Boolean activo) {
-        return clienteDAO.listar(Texto.limpiar(texto), activo);
+    public List<Cliente> listar(String texto, Boolean activo, Boolean mayorista) {
+        return clienteDAO.listar(Texto.limpiar(texto), activo, mayorista);
     }
 
     public List<Cliente> buscarParaVenta(String texto) {
@@ -33,7 +33,6 @@ public class ClienteService {
                 .orElseThrow(() -> new ServiceException("El cliente no existe."));
     }
 
-    /** Crea (id null) o actualiza un cliente. */
     public Cliente guardar(Integer id, String nombres, String apellidos, String dni, String telefono,
                            String email, boolean mayorista) {
         nombres = Texto.limpiar(nombres);
@@ -42,8 +41,8 @@ public class ClienteService {
         telefono = Texto.limpiar(telefono);
         email = Texto.limpiar(email);
 
-        UsuarioService.validarNombre(nombres, "nombres");
-        UsuarioService.validarNombre(apellidos, "apellidos");
+        Validaciones.nombre(nombres, "nombres");
+        Validaciones.nombre(apellidos, "apellidos");
         if (dni != null && !Texto.esDni(dni)) {
             throw new ServiceException("El DNI debe tener 8 dígitos.");
         }
