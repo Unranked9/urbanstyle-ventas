@@ -8,7 +8,6 @@ import com.urbanstyle.entity.ProductoVariante;
 
 public interface ProductoDAO {
 
-    /** Lista productos con sus variantes (JOIN FETCH). Los filtros nulos se ignoran. */
     List<Producto> listar(String texto, Integer categoriaId, Integer marcaId, Boolean activo);
 
     Optional<Producto> buscarPorIdConVariantes(int id);
@@ -17,7 +16,7 @@ public interface ProductoDAO {
 
     void cambiarEstado(int id, boolean activo);
 
-    /** Variantes activas de productos activos que coinciden con el texto. */
+
     List<ProductoVariante> buscarVariantesParaVenta(String texto, int limite);
 
 }

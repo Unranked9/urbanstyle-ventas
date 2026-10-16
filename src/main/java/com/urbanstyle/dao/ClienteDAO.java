@@ -9,7 +9,6 @@ public interface ClienteDAO {
 
     List<Cliente> listar(String texto, Boolean activo, Boolean mayorista);
 
-    /** Búsqueda rápida para la pantalla de venta (por nombre, DNI o email). */
     List<Cliente> buscarActivos(String texto, int limite);
 
     Optional<Cliente> buscarPorId(int id);
@@ -20,5 +19,6 @@ public interface ClienteDAO {
 
     boolean existeDni(String dni, Integer excluirId);
 
+    
 
 }
